@@ -28,9 +28,7 @@ The code should run using Python versions 3.*.
 
 ## Project Objectives<a name="objectives"></a>
 
-The goal of the project is to classify the disaster messages into categories. 
-In this project, I analyzed disaster data from [Figure Eight](https://www.figure-eight.com/) to build a model for an API that classifies disaster messages. 
-Through a web app, the user can input a new message and get classification results in several categories. The web app also display visualizations of the data. 
+The aim of this project is to classify disaster messages into categories.  We start by analyzing disaster data collected from [Figure Eight Website](https://www.figure-eight.com/) and build a model that could access using API interface to classify new disaster messages. Web application allows the users to input a new message and get classification results in several categories. The web application also displays visualizations of the data.
 
 ## Project Descriptions<a name = "descriptions"></a>
 The project has three componants which are:
