@@ -8,29 +8,22 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
 from sqlalchemy import create_engine
+import joblib
+import tokenize
+
 
 
 app = Flask(__name__)
 
-def tokenize(text):
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
 
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('disaster_messages_tbl', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
+model = joblib.load("../models/classifier.pkl",'rb')
 
 
 # index webpage displays cool visuals and receives user input text for model

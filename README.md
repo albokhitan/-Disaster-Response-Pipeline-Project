@@ -1,55 +1,63 @@
-# Disaster Response Pipelines
+# Classification Web Application of Disaster Messages
+
+In this project, you'll analyze disaster data from [Figure Eight](https://www.figure-eight.com/) to build a model for an API that classifies disaster messages.
+
 
 ### Table of Contents
 
-1. [Setup](#installation)
-2. [Project Objectives](#objectives)
-3. [Project Descriptions](#descriptions)
+1. [Project Objectives](#objectives)
+2. [Project Description](#descriptions)
+3. [Installation](#installation)
 4. [Folder Structure](#files)
 5. [Instructions](#instructions)
 
-## Setup <a name="installation"></a>
-
-All libraries are available in Anaconda distribution of Python. The used libraries are:
-
-- pandas
-- re
-- sys
-- json
-- sklearn
-- nltk
-- sqlalchemy
-- pickle
-- Flask
-- plotly
-- sqlite3
-
-The code should run using Python versions 3.*.
-
 ## Project Objectives<a name="objectives"></a>
 
-The aim of this project is to classify disaster messages into categories.  We start by analyzing disaster data collected from [Figure Eight Website](https://www.figure-eight.com/) and build a model that could access using API interface to classify new disaster messages. Web application allows the users to input a new message and get classification results in several categories. The web application also displays visualizations of the data.
+The aim of this project is to classify disaster messages into categories.  We start by analyzing disaster data collected from [Figure Eight Website](https://www.figure-eight.com/) and build a model that could access using API interface to classify new disaster messages. 
+Web application allows the users to input a new message and get classification results in several categories. The web application also displays visualizations of the data.
 
 ## Project Descriptions<a name = "descriptions"></a>
 The project has three componants which are:
 
-**1. ETL Pipeline:** `process_data.py` file contain the script to create ETL pipline which:
-  - Loads the `messages` and `categories` datasets
-  - Merges the two datasets
-  - Cleans the data
-  - Stores it in a SQLite database
+**1st componant is ETL Pipeline:** `etl_pipeline.py` file contain the script to create ETL pipline which:
+  - Loads the `messages` and `categories` datasets from csv files into dataframes
+  - Merges the two datasets into single dataframe using id 
+  - Cleans the data and remove doublcates
+  - Stores clean data into a SQLite database file to be used in ML pipeline later
 
-**2. ML Pipeline:** `train_classifier.py` file contain the script to create ML pipline which:
-  - Loads data from the SQLite database
+**2nd componant is ML Pipeline:** `ml_pipeline.py` file contain the script to create ML pipline which:
+  - Loads data from the SQLite database file
   - Splits the dataset into training and test sets
   - Builds a text processing and machine learning pipeline
   - Trains and tunes a model using GridSearchCV
-  - Outputs results on the test set
+  - Outputs the performance results of the test set
   - Exports the final model as a pickle file
 
-**3. Flask Web App:** the web app enables the user to enter a disaster message, and then view the categories of the message.
+**3rd componant is Web Application:** the web app enables the user to enter a disaster message, and then view the categories of the message.
 The web app also contains some visualizations that describe the data. 
- 
+  - Loads the model from pickle file  
+  - Build Web UI and show data statistics 
+  - Wait for user message
+  - Classify user message 
+  - display result as list of related categories of the user message   
+
+
+## Installation <a name="installation"></a>
+
+All libraries are available in Anaconda base distribution of Python versions 3.*. The used libraries are:
+
+- pandas : used to load data 
+- nltk : used for textual data analysis
+- sklearn : used for building classfication model 
+- pickle : used to store model into file
+- Flask : used for builing web application 
+- plotly : used to create chart
+- sqlite3 : used to store clean and analyize data 
+- sqlalchemy : used to create database 
+- re : to search data based on regulare expression 
+- sys : used internally by obove packages
+
+
 ## Folder Structure <a name="files"></a>
 The files structure is arranged as below:
 
@@ -66,9 +74,9 @@ The files structure is arranged as below:
 			- disaster_categories.csv: categories dataset
 			- disaster_messages.csv: messages dataset
 			- DisasterResponse.db: disaster response database
-			- process_data.py: ETL process
+			- etl_pipeline.py: ETL process
 		- \models
-			- train_classifier.py: classification code
+			- ml_pipeline.py: classification code
 
 ## Instructions <a name="instructions"></a>
 To execute the app follow the instructions:
@@ -82,4 +90,4 @@ To execute the app follow the instructions:
 2. Run the following command in the app's directory to run your web app.
     `python run.py`
 
-3. Go to http://0.0.0.0:3001/
+3. Go to http://localhost:5001/
