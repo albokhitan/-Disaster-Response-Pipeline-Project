@@ -2,61 +2,50 @@ import json
 import plotly
 import pandas as pd
 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
-
 from flask import Flask
-from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
-#from sklearn.externals import joblib
-from sqlalchemy import create_engine
+from flask import render_template, request
+from plotly.graph_objs import Bar, Pie
 import joblib
-import tokenize
-
-
+from sqlalchemy import create_engine
+from models.model_identity.custom_transformer import Tokenizer, StartingVerbExtractor
 
 app = Flask(__name__)
 
+# load model
+# # for server run
+model = joblib.load("data/classifier.pkl")
 
 # load data
-engine = create_engine('sqlite:///../data/DisasterResponse.db')
-df = pd.read_sql_table('disaster_messages_tbl', engine)
-
-# load model
-model = joblib.load("../models/classifier.pkl",'rb')
+engine = create_engine('sqlite:///data/DisasterResponse.db')
+df = pd.read_sql_table('DisasterResponse', engine)
 
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
+
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    catergory_df = df.drop(columns=['id', 'message', 'genre'])
+    catergory_counts = list(catergory_df.sum().sort_values(ascending=False).values)
+    catergory_names = list(catergory_df.sum().sort_values(ascending=False).index)
     
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
-    catg_nam = df.iloc[:, 4:].columns
-    bol = df.iloc[:, 4:] != 0
-    cat_bol = bol.sum().values
-
-    sum_cat = df.iloc[:, 4:].sum()
-    top_cat = sum_cat.sort_values(ascending=False)[1:11]
-    top_cat_names = list(top_cat.index)
-
     graphs = [
         {
             'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
+                Pie(
+                    labels=genre_names,
+                    values=genre_counts
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'Message Genres Distribution',
                 'yaxis': {
                     'title': "Count"
                 },
@@ -68,36 +57,22 @@ def index():
         {
             'data': [
                 Bar(
-                    x=catg_nam,
-                    y=cat_bol
+                    x=catergory_names,
+                    y=catergory_counts
                 )
             ],
 
             'layout': {
-                'title': 'Message Categories distribution',
+                'title': 'Message Catergories Distribution',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Categories"
-                }
-            }
-        },
-        {
-            'data': [
-                Bar(
-                    x=top_cat_names,
-                    y=top_cat
-                )
-            ],
-
-            'layout': {
-                'title': 'Top 10 Categories',
-                'yaxis': {
-                    'title': "Count"
+                    'title': "",
+                    'tickangle' : 45
                 },
-                'xaxis': {
-                    'title': "Categories"
+                'xticks': {
+                    'rotation': 45
                 }
             }
         }
@@ -130,7 +105,9 @@ def go():
 
 
 def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
+    # app.run(host='0.0.0.0', port=3001, debug=True)
+    pass
+
 
 if __name__ == '__main__':
     main()
