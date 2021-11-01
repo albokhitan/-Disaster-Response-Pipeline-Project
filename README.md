@@ -80,7 +80,7 @@ The files structure is arranged as below:
 			- classifier.pkl: classification model pickle file
 
 ## Instructions <a name="instructions"></a>
-To execute the app follow the instructions:
+To execute the web application follow the instructions:
 1. To set up database and model: run the following commands in the project's root directory.
 
     - Execute ETL pipeline pthon code for cleaning data then storing it into sqllite database
@@ -91,4 +91,4 @@ To execute the app follow the instructions:
 2. To run web app, exeute the command in the app's directory root after copying classifier.pkl into the models subfolder 
     `python run_local.py`
 
-3. Go to http://localhost:5001/
+3. Open url: http://localhost:3001/
