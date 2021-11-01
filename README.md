@@ -77,6 +77,7 @@ The files structure is arranged as below:
 			- etl_pipeline.py: ETL process
 		- \models
 			- ml_pipeline.py: classification code
+			- classifier.pkl: classification model pickle file
 
 ## Instructions <a name="instructions"></a>
 To execute the app follow the instructions:
