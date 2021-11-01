@@ -80,14 +80,14 @@ The files structure is arranged as below:
 
 ## Instructions <a name="instructions"></a>
 To execute the app follow the instructions:
-1. Run the following commands in the project's root directory to set up your database and model.
+1. To set up database and model: run the following commands in the project's root directory.
 
-    - To run ETL pipeline that cleans data and stores in database
+    - Execute ETL pipeline pthon code for cleaning data then storing it into sqllite database
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
-    - To run ML pipeline that trains classifier and saves
+    - Execute machine learning pipeline to trains classifier and save the model into pickle file
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
-2. Run the following command in the app's directory to run your web app.
-    `python run.py`
+2. To run web app, exeute the command in the app's directory root after copying classifier.pkl into the models subfolder 
+    `python run_local.py`
 
 3. Go to http://localhost:5001/
