@@ -65,9 +65,9 @@ The files structure is arranged as below:
 	- ETL Pipeline Preparation.ipynb: contains ETL pipeline preparation code
 	- ML Pipeline Preparation.ipynb: contains ML pipeline preparation code
 	- workspace
-		- \app
-			- run.py: flask file to run the app
-		- \templates
+		- \app\
+			- run_local.py: flask file to run the app
+		- \app\templates
 			- master.html: main page of the web application 
 			- go.html: result web page
 		- \data
